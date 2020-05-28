@@ -91,7 +91,7 @@ let createMainData = function(yesterdayData, todaysData) {
             'currency': value.currency,
             'code': value.code,
             'mid': value.mid,
-            'percentChange': value.mid * 100 / yesterdayData[index].mid,
+            'percentChange': value.mid / yesterdayData[index].mid * 100 - 100,
             'currencyDiff': value.mid - yesterdayData[index].mid,
         };
     })
