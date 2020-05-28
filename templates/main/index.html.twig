@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Kurs Walut {% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="text-right"> 
+        <button type="button" id="refreshResults" class="btn btn-secondary sticky-position">Odswiez</button>
+    </div>
+    <table class="table table-striped bg-light">
+    <thead class="thead-dark">
+        <tr>
+        <th scope="col">Nazwa waluty <span></span></th>
+        <th scope="col">Symbol <span></span></th>
+        <th scope="col">Kurs <span></span></th>
+        <th scope="col">Zmiana (%) <span></span></th>
+        <th scope="col">Zmiana (zl) <span></span></th>
+        </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+    </table>
+</div>
+{% endblock %}
