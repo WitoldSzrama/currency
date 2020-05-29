@@ -9,8 +9,12 @@ $(document).ready(function() {
 
         let tableBody = $('tbody');
         let date = new Date();
+        let today = date.toISOString().substring(0,10)
         let yesterday = new Date(Date.now() - 86400000); 
+        let twoDaysBefore = new Date(yesterday - 86400000); 
         let yesterdayString = yesterday.toISOString().substring(0,10);
+        let twoDaysBeforeString = twoDaysBefore.toISOString().substring(0,10);
+        
     
     let ajaxCall = function() {
         $('body').css('cursor', 'wait');
@@ -22,15 +26,46 @@ $(document).ready(function() {
                 return data;
             },
         })
+
         let todayAjax = $.ajax({
             url:'https://api.nbp.pl/api/exchangerates/tables/a/today/?format=json',
             method: 'GET',
             async: false,
             success: function(data) {
                 return data;
+            },
+            error: function(data) {
+                return null;
             }
         })
-        let data = createMainData(yesterdayAjax.responseJSON[0].rates, todayAjax.responseJSON[0].rates)
+        console.log(todayAjax.status );
+        let twoDaysBeforeAjax;
+
+        if(todayAjax.status == "404"){
+
+            twoDaysBeforeAjax = $.ajax({
+                url:'https://api.nbp.pl/api/exchangerates/tables/a/' + twoDaysBeforeString + '/?format=json',
+                method: 'GET',
+                async: false,
+                success: function(data) {
+                    return data;
+                },
+                error: function(data) {
+                    return null;
+                }
+            })
+
+        }
+
+        let data;
+        if(todayAjax.status === 200) {
+            data = createMainData(yesterdayAjax.responseJSON[0].rates, todayAjax.responseJSON[0].rates);
+            $('#header').append(today)
+        } else {
+            data = createMainData(twoDaysBeforeAjax.responseJSON[0].rates, yesterdayAjax.responseJSON[0].rates);
+            $('#header').append(yesterdayString)
+        }
+        
         
         
         $(tableBody).empty();
