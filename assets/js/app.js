@@ -60,10 +60,10 @@ $(document).ready(function() {
         let data;
         if(todayAjax.status === 200) {
             data = createMainData(yesterdayAjax.responseJSON[0].rates, todayAjax.responseJSON[0].rates);
-            $('#header').append(today)
+            $('#header').html('Dane z dnia: ' + today)
         } else {
             data = createMainData(twoDaysBeforeAjax.responseJSON[0].rates, yesterdayAjax.responseJSON[0].rates);
-            $('#header').append(yesterdayString)
+            $('#header').html('Dane z dnia: ' + yesterdayString)
         }
         
         
